@@ -8,7 +8,7 @@ export const useAddRoadmap = () => {
   const [isLoading, setLoading] = useState(false);
   const user = useQuery(api.user.getProfile);
 
-  const mutation = useMutation(api.roadmap.createRoadmap);
+  const mutation = useMutation(api.userRoadmap.createRoadmap);
   const aiMutate = useAction(api.ai.getAIResponse);
 
   const onCreateRoadmap = async (prompt: string) => {

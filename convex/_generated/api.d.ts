@@ -16,8 +16,8 @@ import type {
 import type * as ai from "../ai.js";
 import type * as auth from "../auth.js";
 import type * as http from "../http.js";
-import type * as roadmap from "../roadmap.js";
 import type * as user from "../user.js";
+import type * as userRoadmap from "../userRoadmap.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -31,8 +31,8 @@ declare const fullApi: ApiFromModules<{
   ai: typeof ai;
   auth: typeof auth;
   http: typeof http;
-  roadmap: typeof roadmap;
   user: typeof user;
+  userRoadmap: typeof userRoadmap;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,

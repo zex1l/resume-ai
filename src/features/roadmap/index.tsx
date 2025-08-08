@@ -1,5 +1,4 @@
 import { Dot, IterationCcw } from 'lucide-react';
-import type { RoadmapType } from '../roadmap-list/roadmap.type';
 import { RoadmapBlock } from './ui/roadmap-block';
 import {
   RoadmapBlocksCanvas,

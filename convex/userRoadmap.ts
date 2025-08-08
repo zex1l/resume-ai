@@ -1,3 +1,5 @@
+import type { ExpressionOrValue } from 'convex/server';
+import type { Id } from './_generated/dataModel';
 import { mutation, query } from './_generated/server';
 import { v } from 'convex/values';
 
@@ -124,5 +126,26 @@ export const getUserRoadmaps = query({
       .withIndex('by_author')
       .filter((q) => q.eq(q.field('email'), email))
       .collect();
+  },
+});
+
+export const getRoadmapBlock = query({
+  args: {
+    id: v.id('usersRoadmaps'),
+    blockId: v.string(),
+  },
+  handler: async (ctx, { id, blockId }) => {
+    const currentRoadmap = await ctx.db
+      .query('usersRoadmaps')
+      .filter((q) => q.eq(q.field('_id'), id))
+      .first();
+
+    if (!currentRoadmap) throw new Error('Roadmap not found');
+
+    const currentBlock = currentRoadmap.stages.filter((stage) =>
+      stage.blocks.some((block) => block.id === blockId)
+    )[0];
+
+    return currentBlock;
   },
 });

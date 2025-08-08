@@ -8,7 +8,7 @@ export const useGetRoadmapById = () => {
 
   const roadmapId = (params.roadmapId as string) || '';
 
-  const roadmap = useQuery(api.roadmap.getRoadmap, {
+  const roadmap = useQuery(api.userRoadmap.getRoadmap, {
     id: roadmapId as Id<'usersRoadmaps'>,
   });
 

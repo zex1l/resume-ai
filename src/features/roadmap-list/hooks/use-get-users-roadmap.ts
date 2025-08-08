@@ -4,7 +4,7 @@ import { useQuery } from 'convex/react';
 export const useGetUsersRoadmap = () => {
   const user = useQuery(api.user.getProfile);
 
-  const roadmaps = useQuery(api.roadmap.getUserRoadmaps, {
+  const roadmaps = useQuery(api.userRoadmap.getUserRoadmaps, {
     email: user?.email || '',
   });
 
