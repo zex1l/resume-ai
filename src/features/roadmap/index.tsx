@@ -1,4 +1,4 @@
-import { Dot } from 'lucide-react';
+import { Dot, IterationCcw } from 'lucide-react';
 import type { RoadmapType } from '../roadmap-list/roadmap.type';
 import { RoadmapBlock } from './ui/roadmap-block';
 import {
@@ -8,6 +8,8 @@ import {
 } from './ui/roadmap-layout';
 import { Tag } from '@/shared/ui/tag';
 import { RoadmapTags } from './ui/roadmap-tags';
+import { useDraggleArea } from './hooks/use-draggle-area';
+import { Button } from '@/shared/ui/button';
 
 const jsRoadmap: RoadmapType = {
   id: 'js-beginner-to-advanced',
@@ -169,12 +171,15 @@ const jsRoadmap: RoadmapType = {
 };
 
 export const Roadmap = () => {
+  const { canvasRef, offset, onMouseDown, isDragging, resetOffset } =
+    useDraggleArea();
+
   return (
     <RoadmapLayout
       info={
         <RoadmapInfo
-          title={<h1 className="text-4xl font-bold">{jsRoadmap.title}</h1>}
-          description={<p className="text-gray-400">{jsRoadmap.description}</p>}
+          title={jsRoadmap.title}
+          description={jsRoadmap.description}
           tags={
             <RoadmapTags
               tags={jsRoadmap.tags.map((tag) => (
@@ -191,12 +196,24 @@ export const Roadmap = () => {
       }
       canvas={
         <RoadmapBlocksCanvas
+          ref={canvasRef}
+          onMouseDown={onMouseDown}
+          className={`${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+          style={{
+            transform: `translate(${offset.x}px, ${offset.y}px)`,
+            willChange: 'transform',
+          }}
+          actions={
+            <Button onClick={resetOffset}>
+              <IterationCcw />
+            </Button>
+          }
           blocks={jsRoadmap.stages.map((stage, key) => (
             <RoadmapBlock
               key={key}
               id={`${key}`}
-              title={<h3 className="font-bold text-lg">{stage.title}</h3>}
-              description={<p className="text-gray-400">{stage.description}</p>}
+              title={stage.title}
+              description={stage.description}
               subBlocks={stage.blocks.map((block, key) => (
                 <div key={key} className="flex items-center gap-2">
                   <Dot />

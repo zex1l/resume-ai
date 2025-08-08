@@ -1,3 +1,5 @@
+import { cn } from '@/shared/lib/utils';
+
 type RoadmapLayoutProps = {
   info?: React.ReactNode;
   canvas?: React.ReactNode;
@@ -21,8 +23,8 @@ type RoadmapInfoProps = {
 export const RoadmapInfo = ({ description, tags, title }: RoadmapInfoProps) => {
   return (
     <div className="flex flex-col gap-4">
-      {title}
-      {description}
+      <h1 className="text-4xl font-bold">{title}</h1>
+      <p className="text-gray-400">{description}</p>
       {tags}
     </div>
   );
@@ -30,12 +32,32 @@ export const RoadmapInfo = ({ description, tags, title }: RoadmapInfoProps) => {
 
 export const RoadmapBlocksCanvas = ({
   blocks,
+  ref,
+  onMouseDown,
+  className,
+  actions,
+  ...props
 }: {
   blocks?: React.ReactNode;
-}) => {
+  actions?: React.ReactNode;
+  ref?: React.Ref<HTMLDivElement>;
+} & React.HTMLAttributes<HTMLDivElement>) => {
   return (
-    <div className="h-full bg-white/5 border border-white/10 rounded-lg p-4 overflow-x-hidden flex flex-col gap-20 ">
-      {blocks}
+    <div
+      onMouseDown={onMouseDown}
+      className={cn(
+        'h-full relative bg-white/5 border border-white/10 rounded-lg p-4 overflow-hidden ',
+        className
+      )}
+    >
+      <div
+        ref={ref}
+        {...props}
+        className="absolute inset-0 flex flex-col gap-20"
+      >
+        {blocks}
+      </div>
+      {actions && <div className="absolute top-4 left-4">{actions}</div>}
     </div>
   );
 };

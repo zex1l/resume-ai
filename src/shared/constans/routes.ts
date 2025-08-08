@@ -4,4 +4,5 @@ export const ROUTES = {
   RESUME: '/resume',
   ROADMAPS: '/roadmaps',
   ROADMAP: '/roadmaps/:roadmapId',
+  ROADMAP_BLOCK: '/roadmaps/:roadmapId/:blockId',
 };

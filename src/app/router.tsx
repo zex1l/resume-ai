@@ -43,6 +43,10 @@ export const router = createBrowserRouter([
                 path: ROUTES.ROADMAP,
                 lazy: () => import('@/pages/roadmap.page'),
               },
+              {
+                path: ROUTES.ROADMAP_BLOCK,
+                lazy: () => import('@/pages/roadmap-block.page'),
+              },
             ],
           },
         ],
