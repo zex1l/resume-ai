@@ -132,6 +132,11 @@ section {
   }
 }
 
+#root>section {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
 ul li {
   margin-bottom: 10px;
 }

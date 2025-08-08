@@ -1,4 +1,4 @@
-import type { View } from '../hooks/useViewList';
+import type { View } from '../hooks/use-view-list';
 
 export const RoadmapListItems = ({
   view,

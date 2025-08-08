@@ -7,6 +7,9 @@ export const createRoadmap = mutation({
     description: v.string(),
     tags: v.array(v.string()),
     author: v.optional(v.string()),
+    email: v.string(),
+    createdAt: v.string(),
+    updatedAt: v.string(),
     stages: v.array(
       v.object({
         id: v.string(),
@@ -66,8 +69,8 @@ export const createRoadmap = mutation({
     ),
   },
   handler: async (ctx, args) => {
-    const { title, description, tags, author, stages } = args;
-
+    const { title, description, tags, author, stages, email } = args;
+    console.log({ email });
     // Подсчёт количества
     const totalStages = stages.length;
     const totalBlocks = stages.reduce(
@@ -89,18 +92,37 @@ export const createRoadmap = mutation({
       totalBlocks,
       totalItems,
       stages,
+      email,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
 
     // Вставляем в таблицу
-    const insertedId = await ctx.db.insert('roadmaps', roadmapData);
+    const insertedId = await ctx.db.insert('usersRoadmaps', roadmapData);
     return { id: insertedId, ...roadmapData };
   },
 });
 
 export const getAllRoadmaps = query({
   handler: async (ctx) => {
-    return await ctx.db.query('roadmaps').collect();
+    return await ctx.db.query('usersRoadmaps').collect();
+  },
+});
+
+export const getRoadmap = query({
+  args: { id: v.id('usersRoadmaps') },
+  handler: async (ctx, { id }) => {
+    return await ctx.db.get(id);
+  },
+});
+
+export const getUserRoadmaps = query({
+  args: { email: v.string() },
+  handler: async (ctx, { email }) => {
+    return await ctx.db
+      .query('usersRoadmaps')
+      .withIndex('by_author')
+      .filter((q) => q.eq(q.field('email'), email))
+      .collect();
   },
 });

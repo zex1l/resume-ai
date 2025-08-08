@@ -1,5 +1,5 @@
 import { Tabs, TabsList, TabsTrigger } from '@/shared/ui/tabs';
-import type { View } from '../hooks/useViewList';
+import type { View } from '../hooks/use-view-list';
 import { Grid, List } from 'lucide-react';
 
 export const RoadmapListTabs = ({

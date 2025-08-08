@@ -16,7 +16,7 @@ export const RoadmapBlock = ({
   arrow,
 }: RoadmapBlockType) => {
   return (
-    <Link to={ROUTES.ROADMAP + `/${id}`}>
+    <>
       <div
         onClick={(e) => console.log(e)}
         data-id={id}
@@ -28,6 +28,6 @@ export const RoadmapBlock = ({
         {subtitle}
       </div>
       {arrow}
-    </Link>
+    </>
   );
 };

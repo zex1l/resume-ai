@@ -76,6 +76,26 @@ export default defineSchema({
     createdAt: v.string(),
     updatedAt: v.string(),
     author: v.optional(v.string()),
+    email: v.string(),
+    totalStages: v.number(),
+    totalBlocks: v.number(),
+    totalItems: v.number(),
+    stages: v.array(RoadmapStage),
+  })
+    // Индексы
+    .index('by_title', ['title'])
+    .index('by_tags', ['tags'])
+    .index('by_author', ['author'])
+    .index('by_updated_at', ['updatedAt']),
+
+  usersRoadmaps: defineTable({
+    title: v.string(),
+    description: v.string(),
+    tags: v.array(v.string()),
+    createdAt: v.string(),
+    updatedAt: v.string(),
+    author: v.optional(v.string()),
+    email: v.string(),
     totalStages: v.number(),
     totalBlocks: v.number(),
     totalItems: v.number(),
