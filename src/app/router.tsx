@@ -3,13 +3,14 @@ import App from './app';
 import { HomePage } from '../pages/home.page';
 import { ROUTES } from '../shared/constans/routes';
 import { Header } from '@/widgets/header';
+import { AuthPage } from '@/pages/auth.page';
+import { ProtectedRoute } from './protected-route';
 
 export const router = createBrowserRouter([
   {
     element: <App />,
     children: [
       {
-        path: ROUTES.HOME,
         element: (
           <>
             <Header />
@@ -23,7 +24,24 @@ export const router = createBrowserRouter([
             path: ROUTES.HOME,
             element: <HomePage />,
           },
+          {
+            element: (
+              <>
+                <ProtectedRoute />
+              </>
+            ),
+            children: [
+              {
+                path: ROUTES.RESUME,
+                element: <div>Resume</div>,
+              },
+            ],
+          },
         ],
+      },
+      {
+        path: ROUTES.AUTH,
+        element: <AuthPage />,
       },
     ],
   },
