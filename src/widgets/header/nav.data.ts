@@ -1,18 +1,16 @@
+import { ROUTES } from '@/shared/constans/routes';
+
 export const navData = [
   {
     title: 'Home',
-    href: '/home',
+    href: ROUTES.HOME,
   },
   {
-    title: 'About',
-    href: '/about',
+    title: 'Roadmaps',
+    href: ROUTES.ROADMAPS,
   },
   {
-    title: 'Projects',
-    href: '/projects',
-  },
-  {
-    title: 'Contact',
-    href: '/contact',
+    title: 'Resume',
+    href: ROUTES.RESUME,
   },
 ];

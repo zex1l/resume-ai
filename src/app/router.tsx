@@ -14,7 +14,7 @@ export const router = createBrowserRouter([
         element: (
           <>
             <Header />
-            <div className="mt-[100px] min-h-screen">
+            <div className="mt-[100px] h-[89vh]">
               <Outlet />
             </div>
           </>
@@ -34,6 +34,14 @@ export const router = createBrowserRouter([
               {
                 path: ROUTES.RESUME,
                 element: <div>Resume</div>,
+              },
+              {
+                path: ROUTES.ROADMAPS,
+                lazy: () => import('@/pages/roadmaps.page'),
+              },
+              {
+                path: ROUTES.ROADMAP,
+                lazy: () => import('@/pages/roadmap.page'),
               },
             ],
           },

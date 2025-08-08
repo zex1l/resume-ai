@@ -7,7 +7,6 @@ export const useOpenItems = (initialItems: FaqItemType[]) => {
   );
 
   const toggleOpen = (id: number) => {
-    console.log('id', { id });
     setOpenItems((prevItems) =>
       prevItems.map((item) =>
         item.id === id ? { ...item, open: !item.open } : item

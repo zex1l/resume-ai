@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { HeaderLayout } from './header-layout';
 import { HeaderNav } from './header-nav';
 import { navData } from './nav.data';
@@ -7,10 +7,13 @@ import { Authenticated, Unauthenticated } from 'convex/react';
 import { Menu } from 'lucide-react';
 import { useAuthActions } from '@convex-dev/auth/react';
 import { ROUTES } from '@/shared/constans/routes';
+import { Container } from '../container';
 
 export const Header = () => {
   const { signOut } = useAuthActions();
   const navigate = useNavigate();
+  const pathname = useLocation().pathname;
+
   return (
     <HeaderLayout
       logo={<h1 className="text-2xl font-bold">Logo</h1>}
@@ -19,7 +22,10 @@ export const Header = () => {
           items={
             <>
               {navData.map((item, key) => (
-                <li key={key}>
+                <li
+                  key={key}
+                  className={`${pathname === item.href && 'text-white'} text-gray-400 hover:text-white flex items-center`}
+                >
                   <Link to={item.href}>{item.title}</Link>
                 </li>
               ))}

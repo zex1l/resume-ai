@@ -21,7 +21,6 @@ export const useAuthType = () => {
   };
 
   const handleAuth = async (data: FormDataLogin | FormDataRegistern) => {
-    console.log(data);
     const { signingIn } = await signIn('password', data);
     if (signingIn) navigate('/');
   };
