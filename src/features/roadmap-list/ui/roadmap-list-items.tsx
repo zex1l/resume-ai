@@ -47,7 +47,7 @@ export const RoadmapListItem = ({
   stages: number;
 }) => {
   return (
-    <div className="flex flex-col gap-4 h-full bg-zinc-800/40 p-4 rounded-lg border border-white/10">
+    <div className="flex flex-col gap-4 h-full bg-zinc-800/40 p-4 rounded-lg border border-white/10 hover:bg-zinc-800 hover:border-white/20 transition-all">
       <div className="flex flex-col gap-2">
         <h3 className="font-bold text-xl">{title}</h3>
         <p>{description}</p>
