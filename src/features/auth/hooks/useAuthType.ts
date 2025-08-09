@@ -3,6 +3,7 @@ import { useState } from 'react';
 import type { FormDataLogin } from '../ui/auth-login-form';
 import type { FormDataRegistern } from '../ui/auth-register-form';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 export type StepType = 'signIn' | 'signUp';
 
@@ -21,8 +22,18 @@ export const useAuthType = () => {
   };
 
   const handleAuth = async (data: FormDataLogin | FormDataRegistern) => {
-    const { signingIn } = await signIn('password', data);
-    if (signingIn) navigate('/');
+    try {
+      const { signingIn } = await signIn('password', data);
+
+      if (!signingIn) {
+        throw new Error('Failed to sign in');
+      }
+
+      toast.success('You are signed in successfully');
+      navigate('/');
+    } catch (error) {
+      toast.error('Failed to sign in, please try again');
+    }
   };
 
   return {

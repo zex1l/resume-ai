@@ -9,6 +9,7 @@ import { useGetUsersRoadmap } from './hooks/use-get-users-roadmap';
 import { href, Link } from 'react-router-dom';
 import { ROUTES } from '@/shared/constans/routes';
 import { Tag } from '@/shared/ui/tag';
+import { NotFound } from '@/widgets/not-found';
 
 export const RoadmapList = () => {
   const { handleViewChange, view } = useViewList();
@@ -38,34 +39,38 @@ export const RoadmapList = () => {
         </>
       }
       children={
-        <RoadmapListItems
-          view={view}
-          children={roadmaps?.map((roadmap) => (
-            <Link
-              to={href(ROUTES.ROADMAP, { roadmapId: roadmap._id })}
-              key={roadmap._id}
-            >
-              <RoadmapListItem
+        roadmaps?.length ? (
+          <RoadmapListItems
+            view={view}
+            children={roadmaps?.map((roadmap) => (
+              <Link
+                to={href(ROUTES.ROADMAP, { roadmapId: roadmap._id })}
                 key={roadmap._id}
-                title={roadmap.title}
-                description={roadmap.description}
-                stages={roadmap.stages.length}
-                tags={
-                  <>
-                    {roadmap.tags.map((tag) => (
-                      <Tag
-                        value={tag}
-                        onClick={(value) => console.log(value)}
-                        key={tag}
-                        title={tag}
-                      />
-                    ))}
-                  </>
-                }
-              />
-            </Link>
-          ))}
-        />
+              >
+                <RoadmapListItem
+                  key={roadmap._id}
+                  title={roadmap.title}
+                  description={roadmap.description}
+                  stages={roadmap.stages.length}
+                  tags={
+                    <>
+                      {roadmap.tags.map((tag) => (
+                        <Tag
+                          value={tag}
+                          onClick={(value) => console.log(value)}
+                          key={tag}
+                          title={tag}
+                        />
+                      ))}
+                    </>
+                  }
+                />
+              </Link>
+            ))}
+          />
+        ) : (
+          <NotFound className='mt-20' text="No roadmaps found" />
+        )
       }
     />
   );

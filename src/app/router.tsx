@@ -5,6 +5,7 @@ import { ROUTES } from '../shared/constans/routes';
 import { Header } from '@/widgets/header';
 import { AuthPage } from '@/pages/auth.page';
 import { ProtectedRoute } from './protected-route';
+import { NotFoundPage } from '@/pages/not-found.page';
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ export const router = createBrowserRouter([
           {
             path: ROUTES.HOME,
             element: <HomePage />,
+          },
+          {
+            path: '*',
+            element: <NotFoundPage />,
           },
           {
             element: (
