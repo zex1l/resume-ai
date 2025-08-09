@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 
-const initialOffset = { x: 0, y: 16 };
+const initialTransform = { x: 0, y: 128, scale: 1 };
 
 export const useDraggleArea = () => {
-  const [offset, setOffset] = useState(initialOffset);
+  const [transform, setTransform] = useState(initialTransform);
   const [isDragging, setIsDragging] = useState(false);
 
   const canvasRef = useRef<HTMLDivElement>(null);
@@ -44,7 +44,8 @@ export const useDraggleArea = () => {
         const deltaX = e.clientX - positionRef.current.x;
         const deltaY = e.clientY - positionRef.current.y;
 
-        setOffset((prev) => ({
+        setTransform((prev) => ({
+          ...prev,
           x: prev.x + deltaX,
           y: prev.y + deltaY,
         }));
@@ -73,7 +74,25 @@ export const useDraggleArea = () => {
     document.addEventListener('mousemove', handleMouseMove);
   };
 
-  const resetOffset = () => setOffset(initialOffset);
+  const onScaleUp = () => {
+    if (transform.scale > 2) return;
+    setTransform((prev) => ({ ...prev, scale: prev.scale + 0.1 }));
+  };
 
-  return { canvasRef, offset, onMouseDown, resetOffset, isDragging };
+  const onScaleDown = () => {
+    if (transform.scale < 0.2) return;
+    setTransform((prev) => ({ ...prev, scale: prev.scale - 0.1 }));
+  };
+
+  const resetOffset = () => setTransform(initialTransform);
+
+  return {
+    canvasRef,
+    transform,
+    onMouseDown,
+    resetOffset,
+    isDragging,
+    onScaleUp,
+    onScaleDown,
+  };
 };

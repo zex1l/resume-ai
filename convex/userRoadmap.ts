@@ -1,5 +1,3 @@
-import type { ExpressionOrValue } from 'convex/server';
-import type { Id } from './_generated/dataModel';
 import { mutation, query } from './_generated/server';
 import { v } from 'convex/values';
 
@@ -63,6 +61,7 @@ export const createRoadmap = mutation({
                     v.literal('advanced')
                   )
                 ),
+                usersCompleted: v.array(v.string()),
               })
             ),
           })
@@ -147,5 +146,65 @@ export const getRoadmapBlock = query({
     )[0];
 
     return currentBlock;
+  },
+});
+
+export const changeRoadmapBlockStatus = mutation({
+  args: {
+    id: v.id('usersRoadmaps'),
+    blockId: v.string(),
+    itemId: v.string(),
+  },
+  handler: async (ctx, { blockId, id, itemId }) => {
+    const userSubject = (await ctx.auth.getUserIdentity())?.subject;
+
+    const indexReplace = userSubject?.indexOf('|');
+
+    if (!indexReplace) throw new Error('Not authenticated');
+
+    const userId = indexReplace
+      ? userSubject?.slice(0, indexReplace)
+      : userSubject;
+
+    if (!userId) throw new Error('Not authenticated');
+
+    const currentRoadmap = await ctx.db
+      .query('usersRoadmaps')
+      .filter((q) => q.eq(q.field('_id'), id))
+      .first();
+
+    if (!currentRoadmap) throw new Error('Roadmap not found');
+
+    const currentBlock = currentRoadmap.stages.filter((stage) =>
+      stage.blocks.some((block) => block.id === blockId)
+    )[0];
+
+    if (!currentBlock) throw new Error('Block not found');
+
+    const currentItem = currentBlock.blocks.filter((block) =>
+      block.items.some((item) => item.id === itemId)
+    )[0];
+
+    if (!currentItem) throw new Error('Item not found');
+
+    const currentInnerItem = currentItem.items.filter(
+      (item) => item.id === itemId
+    )[0];
+
+    let completed = false;
+
+    if (currentInnerItem.usersCompleted.includes(userId)) {
+      currentInnerItem.usersCompleted = currentInnerItem.usersCompleted.filter(
+        (id) => id !== userId
+      );
+      completed = false;
+    } else {
+      currentInnerItem.usersCompleted.push(userId);
+      completed = true;
+    }
+
+    await ctx.db.patch(id, currentRoadmap);
+
+    return { completed };
   },
 });

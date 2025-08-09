@@ -1,4 +1,4 @@
-import { Dot, IterationCcw } from 'lucide-react';
+import { Dot } from 'lucide-react';
 import { RoadmapBlock } from './ui/roadmap-block';
 import {
   RoadmapBlocksCanvas,
@@ -8,10 +8,10 @@ import {
 import { Tag } from '@/shared/ui/tag';
 import { RoadmapTags } from './ui/roadmap-tags';
 import { useDraggleArea } from './hooks/use-draggle-area';
-import { Button } from '@/shared/ui/button';
 import { useGetRoadmapById } from './hooks/use-get-roadmap-by-id';
 import { href, Link } from 'react-router-dom';
 import { ROUTES } from '@/shared/constans/routes';
+import { RoadmapActions } from './ui/roadmap-actions';
 
 // const jsRoadmap: RoadmapType = {
 //   id: 'cpp-developer-roadmap-2024',
@@ -682,8 +682,15 @@ import { ROUTES } from '@/shared/constans/routes';
 // };
 
 export const Roadmap = () => {
-  const { canvasRef, offset, onMouseDown, isDragging, resetOffset } =
-    useDraggleArea();
+  const {
+    canvasRef,
+    transform,
+    onMouseDown,
+    isDragging,
+    resetOffset,
+    onScaleDown,
+    onScaleUp,
+  } = useDraggleArea();
 
   const { roadmap } = useGetRoadmapById();
 
@@ -715,13 +722,16 @@ export const Roadmap = () => {
           onMouseDown={onMouseDown}
           className={`${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
           style={{
-            transform: `translate(${offset.x}px, ${offset.y}px)`,
+            transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})`,
             willChange: 'transform',
           }}
           actions={
-            <Button onClick={resetOffset}>
-              <IterationCcw />
-            </Button>
+            <RoadmapActions
+              onScaleDown={onScaleDown}
+              onScaleUp={onScaleUp}
+              resetOffset={resetOffset}
+              scale={transform.scale}
+            />
           }
           blocks={roadmap.stages.map((stage, key) => (
             <RoadmapBlock
@@ -729,6 +739,7 @@ export const Roadmap = () => {
               id={`${key}`}
               title={stage.title}
               description={stage.description}
+              line={key !== roadmap.stages.length - 1}
               subBlocks={stage.blocks.map((block, key) => (
                 <Link
                   to={href(ROUTES.ROADMAP_BLOCK, {

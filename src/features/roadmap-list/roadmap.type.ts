@@ -10,6 +10,7 @@ export type RoadmapItem = {
     url: string;
   }[];
   difficulty?: 'beginner' | 'intermediate' | 'advanced';
+  usersCompleted: string[];
 };
 
 // Тип для блока (например, "Функции и замыкания")

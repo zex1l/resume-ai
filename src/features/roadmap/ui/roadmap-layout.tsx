@@ -7,7 +7,7 @@ type RoadmapLayoutProps = {
 
 export const RoadmapLayout = ({ info, canvas }: RoadmapLayoutProps) => {
   return (
-    <div className="py-10 h-full flex flex-col gap-10 lg:grid lg:grid-cols-[400px_1fr] xl:grid-cols-[600px_1fr]">
+    <div className="py-10 h-[89vh] flex flex-col gap-10 lg:grid lg:grid-cols-[400px_1fr] xl:grid-cols-[600px_1fr]">
       {info}
       {canvas}
     </div>
@@ -57,7 +57,11 @@ export const RoadmapBlocksCanvas = ({
       >
         {blocks}
       </div>
-      {actions && <div className="absolute top-4 left-4">{actions}</div>}
+      {actions && (
+        <div className="absolute top-4 left-4 w-[calc(100%_-_32px)]">
+          {actions}
+        </div>
+      )}
     </div>
   );
 };

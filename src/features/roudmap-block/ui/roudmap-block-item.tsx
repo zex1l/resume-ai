@@ -1,4 +1,9 @@
+import { ColorBage } from '@/shared/ui/color-bage';
 import { RandomIconComponent } from '@/shared/ui/random-icon';
+import {
+  setColorByDifficulty,
+  type Difficulty,
+} from '@/shared/utils/set-color-by-difficulty';
 
 export const RoadmapBlockItem = ({
   description,
@@ -31,27 +36,39 @@ export const RoadmapBlockInnerItem = ({
   difficulty,
   title,
   index,
+  actions,
 }: {
   title?: React.ReactNode;
   description?: React.ReactNode;
   difficulty?: React.ReactNode;
   resources: React.ReactNode;
+  actions?: React.ReactNode;
   index?: number;
 }) => {
   return (
     <div className="flex flex-col gap-4 bg-white/5 p-4 rounded-lg border border-white/10">
       <div className="flex flex-col gap-2">
-        <h3 className="font-bold text-xl">
-          {index}. {title}
-        </h3>
+        <div className="flex items-center gap-2">
+          {actions}
+          <h3 className="font-bold text-xl">
+            {index}. {title}
+          </h3>
+        </div>
         <p className="text-gray-400">{description}</p>
       </div>
-      <div className="flex flex-col gap-3">
-        <div>
-          <p className="text-zinc-400 text-xs">Resources:</p>
-          {resources}
-        </div>
-        {difficulty}
+      <div className="flex flex-col gap-3 mt-auto">
+        {resources && (
+          <div>
+            <p className="text-zinc-400 text-xs">Resources:</p>
+            {resources}
+          </div>
+        )}
+        <ColorBage
+          className="mt-auto"
+          color={setColorByDifficulty(difficulty as Difficulty)}
+        >
+          {difficulty}
+        </ColorBage>
       </div>
     </div>
   );

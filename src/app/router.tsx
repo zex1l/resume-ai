@@ -14,7 +14,7 @@ export const router = createBrowserRouter([
         element: (
           <>
             <Header />
-            <div className="mt-[100px] h-[89vh]">
+            <div className="mt-[100px] min-h-[89vh]">
               <Outlet />
             </div>
           </>

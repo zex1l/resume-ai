@@ -53,6 +53,7 @@ export const useAddRoadmap = () => {
             status: block.status,
             resources: item.resources,
             difficulty: item.difficulty,
+            usersCompleted: [],
           })),
         })),
       }));

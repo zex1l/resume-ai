@@ -10,7 +10,7 @@ export const RoadmapListLayout = ({
   children?: React.ReactNode;
 }) => {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-10 pb-20">
       {header}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">{filters}</div>

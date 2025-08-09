@@ -23,6 +23,7 @@ const RoadmapItem = v.object({
       v.literal('advanced')
     )
   ),
+  usersCompleted: v.array(v.string()),
 });
 
 // Схема для блока (RoadmapBlock)
