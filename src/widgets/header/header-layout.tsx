@@ -1,5 +1,3 @@
-import { Container } from '../container';
-
 export const HeaderLayout = ({
   actions,
   logo,

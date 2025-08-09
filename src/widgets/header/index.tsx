@@ -7,7 +7,6 @@ import { Authenticated, Unauthenticated } from 'convex/react';
 import { Menu } from 'lucide-react';
 import { useAuthActions } from '@convex-dev/auth/react';
 import { ROUTES } from '@/shared/constans/routes';
-import { Container } from '../container';
 
 export const Header = () => {
   const { signOut } = useAuthActions();

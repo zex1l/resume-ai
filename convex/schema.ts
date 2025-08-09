@@ -49,19 +49,19 @@ const RoadmapStage = v.object({
 });
 
 // Основная схема Roadmap
-const RoadmapType = v.object({
-  id: v.string(),
-  title: v.string(),
-  description: v.string(),
-  tags: v.array(v.string()),
-  createdAt: v.string(), // ISO date string
-  updatedAt: v.string(), // ISO date string
-  author: v.optional(v.string()),
-  totalStages: v.number(),
-  totalBlocks: v.number(),
-  totalItems: v.number(),
-  stages: v.array(RoadmapStage),
-});
+// const RoadmapType = v.object({
+//   id: v.string(),
+//   title: v.string(),
+//   description: v.string(),
+//   tags: v.array(v.string()),
+//   createdAt: v.string(), // ISO date string
+//   updatedAt: v.string(), // ISO date string
+//   author: v.optional(v.string()),
+//   totalStages: v.number(),
+//   totalBlocks: v.number(),
+//   totalItems: v.number(),
+//   stages: v.array(RoadmapStage),
+// });
 
 export default defineSchema({
   ...authTables,
